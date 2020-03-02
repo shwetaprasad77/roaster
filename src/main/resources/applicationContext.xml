@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ctx="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-2.5.xsd "> 
+	
+	<bean id="SqlBean" class="com.rota.util.Query">
+	
+	<property name="validateUser" value="SELECT * FROM ROASTER.RESOURCE WHERE ENTERPRISE_ID=? and PASSWORD=?"></property>
+	
+	<property name="fetchTeamMembers" value="SELECT * FROM ROASTER.RESOURCE WHERE team in 
+					(select team from ROASTER.RESOURCE where ENTERPRISE_ID=?) 
+					and supervisor_flg='F';"></property>
+					
+	<property name="fetchAllConstant" value="SELECT * FROM ROASTER.CONSTANT WHERE key_constant not in 
+					('PROJECT', 'TEAM');"></property>
+					
+	<property name="fetchDistinctKey" value="SELECT distinct key_constant FROM ROASTER.CONSTANT WHERE key_constant not in 
+					('PROJECT', 'TEAM');"></property>
+					
+	<property name="fetchDistinctConstantBykey" value="SELECT distinct constant_name FROM ROASTER.CONSTANT WHERE key_constant =? and 
+					key_constant not in ('PROJECT', 'TEAM');"></property>
+ 	</bean>
+	
+	
+</beans>
