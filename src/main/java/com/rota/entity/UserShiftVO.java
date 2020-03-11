@@ -11,6 +11,10 @@ public class UserShiftVO {
 	private Date assignFrom;
 	private Date assignTo;
 	
+	public UserShiftVO(){
+		
+	}
+	
 	public UserShiftVO(int userShift, int shiftOncall, int sequence, String user, Date assignFrom, Date assignTo) {
 		super();
 		this.userShift = userShift;

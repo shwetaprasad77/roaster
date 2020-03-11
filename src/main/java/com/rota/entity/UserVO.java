@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class UserVO {
 
-	private int user;
+	private String user;
 	private String name;
 	private String password;
 	private int role;
@@ -12,10 +12,14 @@ public class UserVO {
 	private String email;
 	private Date rollon_date;
 	private Date rolloff_date;
-	private boolean active_flg;
+	private boolean activeFlg;
 	
-	public UserVO(int user, String name, String password, int role, String team, String email, Date rollon_date,
-			Date rolloff_date, boolean active_flg) {
+	public UserVO(){
+		
+	}
+	
+	public UserVO(String user, String name, String password, int role, String team, String email, Date rollon_date,
+			Date rolloff_date, boolean activeFlg) {
 		super();
 		this.user = user;
 		this.name = name;
@@ -25,14 +29,14 @@ public class UserVO {
 		this.email = email;
 		this.rollon_date = rollon_date;
 		this.rolloff_date = rolloff_date;
-		this.active_flg = active_flg;
+		this.activeFlg = activeFlg;
 	}
 
-	public int getUser() {
+	public String getUser() {
 		return user;
 	}
 
-	public void setUser(int user) {
+	public void setUser(String user) {
 		this.user = user;
 	}
 
@@ -92,13 +96,21 @@ public class UserVO {
 		this.rolloff_date = rolloff_date;
 	}
 
-	public boolean isActive_flg() {
-		return active_flg;
+	public boolean isActiveFlg() {
+		return activeFlg;
 	}
 
-	public void setActive_flg(boolean active_flg) {
-		this.active_flg = active_flg;
+	public void setActive_flg(boolean activeFlg) {
+		this.activeFlg = activeFlg;
 	}
+
+	@Override
+	public String toString() {
+		return "UserVO [user=" + user + ", name=" + name + ", password=" + password + ", role=" + role + ", team="
+				+ team + ", email=" + email + ", rollon_date=" + rollon_date + ", rolloff_date=" + rolloff_date
+				+ ", activeFlg=" + activeFlg + "]";
+	}
+
 	
 	
 	

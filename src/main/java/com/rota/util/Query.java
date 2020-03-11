@@ -3,50 +3,36 @@ package com.rota.util;
 public class Query {
 
 	private String validateUser = "";
-	private String fetchTeamMembers= "";
-	private String fetchAllConstant = "";
-	private String fetchDistinctKey= "";
-	private String fetchDistinctConstantBykey= "";
-
+	private String getUsersByTeam= "";
+	private String getShiftByUsers = "";
+	private String getTaskByUsers= "";
+	
 	public String getValidateUser() {
 		return validateUser;
 	}
-
 	public void setValidateUser(String validateUser) {
 		this.validateUser = validateUser;
 	}
-
-	public String getFetchTeamMembers() {
-		return fetchTeamMembers;
+	public String getGetUsersByTeam() {
+		return getUsersByTeam;
+	}
+	public void setGetUsersByTeam(String getUsersByTeam) {
+		this.getUsersByTeam = getUsersByTeam;
+	}
+	public String getGetShiftByUsers() {
+		return getShiftByUsers;
+	}
+	public void setGetShiftByUsers(String getShiftByUsers) {
+		this.getShiftByUsers = getShiftByUsers;
+	}
+	public String getGetTaskByUsers() {
+		return getTaskByUsers;
+	}
+	public void setGetTaskByUsers(String getTaskByUsers) {
+		this.getTaskByUsers = getTaskByUsers;
 	}
 
-	public void setFetchTeamMembers(String fetchTeamMembers) {
-		this.fetchTeamMembers = fetchTeamMembers;
-	}
-
-	public String getFetchAllConstant() {
-		return fetchAllConstant;
-	}
-
-	public void setFetchAllConstant(String fetchAllConstant) {
-		this.fetchAllConstant = fetchAllConstant;
-	}
-
-	public String getFetchDistinctKey() {
-		return fetchDistinctKey;
-	}
-
-	public void setFetchDistinctKey(String fetchDistinctKey) {
-		this.fetchDistinctKey = fetchDistinctKey;
-	}
-
-	public String getFetchDistinctConstantBykey() {
-		return fetchDistinctConstantBykey;
-	}
-
-	public void setFetchDistinctConstantBykey(String fetchDistinctConstantBykey) {
-		this.fetchDistinctConstantBykey = fetchDistinctConstantBykey;
-	}
+	
 	
 	
 }

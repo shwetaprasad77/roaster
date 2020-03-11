@@ -6,6 +6,11 @@ public class ShiftOncallVO {
 	private String decsription;
 	private String team;
 	private boolean activeFlg;
+	
+	public ShiftOncallVO(){
+		
+	}
+	
 	public ShiftOncallVO(int shiftOncall, String decsription, String team, boolean activeFlg) {
 		super();
 		this.shiftOncall = shiftOncall;

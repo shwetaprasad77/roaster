@@ -4,18 +4,18 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.logging.Logger;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.rota.entity.ResourceVO;
+import com.rota.entity.UserVO;
 import com.rota.util.DatabaseUtility;
 import com.rota.util.Query;
 
 public class LoginDAO {
-
+	
+	private static Logger logger = Logger.getLogger(LoginDAO.class.getName());
 	private Connection connection = null;
 	private PreparedStatement statement = null;
 	private ResultSet resultSet = null;
@@ -28,15 +28,15 @@ public class LoginDAO {
 	}
 
 	//user login validation
-	public ResourceVO validateUser(String username, String password){
+	public UserVO validateUser(String username, String password){
 
-		ResourceVO resource = new ResourceVO();
+		UserVO userVO = new UserVO();
 
 		if(username!=null && username!= "" && password!=null && password!=""){
 			try {
 
-				System.out.println(username);
-				System.out.println(password);
+				//System.out.println(username);
+				//System.out.println(password);
 				connection = DatabaseUtility.createConnection();
 				statement= connection.prepareStatement(query.getValidateUser());
 				statement.setString(1, username);
@@ -45,23 +45,16 @@ public class LoginDAO {
 
 				while(resultSet.next())
 				{
-					resource.setResourceId(resultSet.getInt("resource_id"));
-					resource.setEnterpriseId(resultSet.getString("enterprise_id"));
-					resource.setPassword(resultSet.getString("password"));
-					resource.setSapId(resultSet.getInt("sap_id"));
-					resource.setName(resultSet.getString("name"));
-					resource.setTeam(resultSet.getInt("team"));
-					resource.setProject(resultSet.getInt("project"));
-					resource.setSupervisorId(resultSet.getInt("supervisor_id"));
-					resource.setSupervisorFlg(resultSet.getString("supervisor_flg"));
-					resource.setActiveFlg(resultSet.getBoolean("active_flg"));
-					resource.setCreatedBy(resultSet.getString("created_by"));
-					resource.setCreatedOn(resultSet.getDate("created_on"));
-					resource.setAmendedBy(resultSet.getString("amended_by"));
-					resource.setAmendedOn(resultSet.getDate("amended_on"));
-
-
+					userVO.setUser(resultSet.getString("rt_user"));
+					userVO.setName(resultSet.getString("name"));
+					userVO.setRole(resultSet.getInt("rt_role"));
+					userVO.setTeam(resultSet.getString("rt_team"));
+					userVO.setEmail(resultSet.getString("email"));
+					userVO.setRollon_date(resultSet.getDate("rollon_date"));
+					userVO.setRollon_date(resultSet.getDate("rolloff_date"));
+					userVO.setActive_flg(resultSet.getBoolean("active_flg"));
 				}
+				logger.info("User Details: "+userVO.toString());
 				resultSet.close();
 
 			}catch (ClassNotFoundException e) {
@@ -74,7 +67,7 @@ public class LoginDAO {
 
 
 		}
-		return resource;
+		return userVO;
 	}
 
 	//Dashboard Display

@@ -2,23 +2,26 @@ package com.rota.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.rota.dao.ConstantDAO;
 import com.rota.dao.LoginDAO;
-import com.rota.dao.ResourceDAO;
-import com.rota.entity.ConstantVO;
-import com.rota.entity.ResourceVO;
+import com.rota.dao.UserDetailsDAO;
+import com.rota.entity.UserVO;
+import com.sun.istack.internal.logging.Logger;
 
 @Controller
 public class LoginController {
 
 	ModelAndView mv;
+	private static Logger logger = Logger.getLogger(LoginController.class);
 
 	@RequestMapping("/")
 	public ModelAndView first(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -33,40 +36,42 @@ public class LoginController {
 			throws Exception {
 
 		mv = new ModelAndView();
-
+		
+		HttpSession session = request.getSession();
+		
 		LoginDAO loginDao = new LoginDAO();
-		ResourceVO resource = new ResourceVO();
-		ResourceDAO resourceDAO = new ResourceDAO();
+		UserVO user = new UserVO();
+		UserDetailsDAO userDetailsDAO = new UserDetailsDAO();
 
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-
+		session.getAttribute(username);
+		
 		//user validation
-		resource = loginDao.validateUser(username, password);
-		//System.out.println(resource.getResourceId());
+		user = loginDao.validateUser(username, password);
+		logger.info("Logged in user: " + user.getUser());
 
-		if (resource.getResourceId() == 0) {
+		if (user.getUser() == null) {
 			mv.addObject("ERROR", "Invalid Username / Password.");
 			mv.setViewName("index");
 			return mv;
 		} else {
 
-			//code to fetch member details
-			List<ResourceVO> memberList= new ArrayList<ResourceVO>();
-			memberList = resourceDAO.fetchMember(username);
+			//code to display data according to user logged in 
+			List<String> userList= new ArrayList<String>();
+			userList = userDetailsDAO.getUsersByTeam(user.getTeam());
 			
-			//List<ConstantVO> keyList = new ArrayList<ConstantVO>();
-			List<ConstantVO> constantList = new ArrayList<ConstantVO>();
-			ConstantDAO constantDAO = new ConstantDAO();
+			//get users shift and on-call details
+			List<Object> userShiftOncallList = new ArrayList<Object>();
+			userShiftOncallList = userDetailsDAO.getShiftByUsers(userList);
 			
-			//fetch key and constant list
-			//keyList = constantDAO.fetchKeyList();
-			constantList = constantDAO.fetchConstantList();
+			//get users task details
+			List<Object> taskList = new ArrayList<Object>();
+			taskList = userDetailsDAO.getTaskByUsers(userList);
 
-			//code to fetch key and constant
-			mv.addObject("resList", resource);
-			mv.addObject("memberList", memberList);
-			mv.addObject("username", resource.getName());
+			mv.addObject("userList", userList);
+			mv.addObject("userShiftOncallList", userShiftOncallList);
+			mv.addObject("taskList", taskList);
 			mv.setViewName("calendar");
 			return mv;
 

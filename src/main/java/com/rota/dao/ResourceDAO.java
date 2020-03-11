@@ -37,7 +37,7 @@ public class ResourceDAO {
 
 			try {
 				connection = DatabaseUtility.createConnection();
-				statement= connection.prepareStatement(query.getFetchTeamMembers());
+				//statement= connection.prepareStatement(query.getFetchTeamMembers());
 				statement.setString(1, username);
 				resultSet= statement.executeQuery();
 				

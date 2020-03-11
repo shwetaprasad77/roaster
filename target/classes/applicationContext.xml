@@ -9,20 +9,23 @@
 	
 	<bean id="SqlBean" class="com.rota.util.Query">
 	
-	<property name="validateUser" value="SELECT * FROM ROASTER.RESOURCE WHERE ENTERPRISE_ID=? and PASSWORD=?"></property>
+	<property name="validateUser" value="select * from roaster.rt_user where rt_user=? and password=? and active_flg='T';"></property>
 	
-	<property name="fetchTeamMembers" value="SELECT * FROM ROASTER.RESOURCE WHERE team in 
-					(select team from ROASTER.RESOURCE where ENTERPRISE_ID=?) 
-					and supervisor_flg='F';"></property>
+	<property name="getUsersByTeam" value="select u.rt_user from roaster.rt_user u , 
+					roaster.rt_team t where t.RT_TEAM = ? and u.RT_TEAM= t.RT_TEAM and u.active_flg='T' 
+					and t.active_flg='T';"></property>
 					
-	<property name="fetchAllConstant" value="SELECT * FROM ROASTER.CONSTANT WHERE key_constant not in 
-					('PROJECT', 'TEAM');"></property>
+	<property name="getShiftByUsers" value="select u.rt_user, soc.descr, us.assign_from_date, us.assign_to_date
+ 						from  roaster.rt_usershift us, roaster.rt_shiftoncall soc, roaster.rt_user u
+ 						where  u.rt_user in ? and u.rt_user= us.rt_user  and 
+  						us.rt_shiftoncall= soc.rt_shiftoncall and u.active_flg='T' and
+  						soc.active_flg='T';"></property>
 					
-	<property name="fetchDistinctKey" value="SELECT distinct key_constant FROM ROASTER.CONSTANT WHERE key_constant not in 
-					('PROJECT', 'TEAM');"></property>
+	<property name="getTaskByUsers" value="select u.rt_user, t.descr, ut.assignment_date, ut.notes
+ 						from  roaster.rt_user u, roaster.rt_task t, roaster.rt_usertask ut
+ 						where u.rt_user in ?  and u.rt_user= ut.rt_user  and 
+  						ut.rt_task= t.rt_task;"></property>
 					
-	<property name="fetchDistinctConstantBykey" value="SELECT distinct constant_name FROM ROASTER.CONSTANT WHERE key_constant =? and 
-					key_constant not in ('PROJECT', 'TEAM');"></property>
  	</bean>
 	
 	

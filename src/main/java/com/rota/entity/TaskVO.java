@@ -7,12 +7,8 @@ public class TaskVO {
 	private String team;
 	private boolean activeFlg;
 	
-	public TaskVO(int task, String decsription, String team, boolean activeFlg) {
-		super();
-		this.task = task;
-		this.decsription = decsription;
-		this.team = team;
-		this.activeFlg = activeFlg;
+	public TaskVO() {
+		
 	}
 	
 	public int getTask() {

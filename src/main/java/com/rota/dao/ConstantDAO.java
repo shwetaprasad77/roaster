@@ -30,7 +30,7 @@ public class ConstantDAO {
 		
 		try {
 			connection = DatabaseUtility.createConnection();
-			statement = connection.prepareStatement(query.getFetchAllConstant());
+			//statement = connection.prepareStatement(query.getFetchAllConstant());
 			
 			
 			
